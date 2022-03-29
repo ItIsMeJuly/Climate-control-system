@@ -1,3 +1,4 @@
+![The Project's Logo](https://github.com/ItIsMeJuly/Climate-control-system/blob/Documents/Documents/CliMate%20Logo.png)
 # Climate-control-system
 A Climate control system which uses arduinos with sensors and actuators to monitor the readings of a room (ex. temperature, humidity, gases and etc). This project consists of 5 parts:</br>
 <ol>
