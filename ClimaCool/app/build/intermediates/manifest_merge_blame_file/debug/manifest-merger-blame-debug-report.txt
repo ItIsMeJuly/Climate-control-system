@@ -1,0 +1,213 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.example.climacool"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="26"
+8-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml
+9        android:targetSdkVersion="32" />
+9-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml
+10
+11    <uses-permission android:name="android.permission.WAKE_LOCK" />
+11-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:5:5-68
+11-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:5:22-65
+12    <uses-permission android:name="android.permission.INTERNET" />
+12-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:6:5-67
+12-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:6:22-64
+13    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+13-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:7:5-79
+13-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:7:22-76
+14    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+14-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:8:5-75
+14-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:8:22-72
+15
+16    <queries>
+16-->[com.android.car.ui:car-ui-lib:2.1.0] C:\Users\Start\.gradle\caches\transforms-3\1b0225bdcc223d41945945df16d5514c\transformed\jetified-car-ui-lib-2.1.0\AndroidManifest.xml:26:5-31:15
+17        <provider
+17-->[com.android.car.ui:car-ui-lib:2.1.0] C:\Users\Start\.gradle\caches\transforms-3\1b0225bdcc223d41945945df16d5514c\transformed\jetified-car-ui-lib-2.1.0\AndroidManifest.xml:27:9-30:67
+18            android:name="com.android.car.ui.plugin.PluginNameProvider"
+18-->[com.android.car.ui:car-ui-lib:2.1.0] C:\Users\Start\.gradle\caches\transforms-3\1b0225bdcc223d41945945df16d5514c\transformed\jetified-car-ui-lib-2.1.0\AndroidManifest.xml:28:13-72
+19            android:authorities="com.android.car.ui.plugin" />
+19-->[com.android.car.ui:car-ui-lib:2.1.0] C:\Users\Start\.gradle\caches\transforms-3\1b0225bdcc223d41945945df16d5514c\transformed\jetified-car-ui-lib-2.1.0\AndroidManifest.xml:29:13-60
+20    </queries>
+21
+22    <application
+22-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:10:5-74:19
+23        android:allowBackup="true"
+23-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:11:9-35
+24        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+24-->[androidx.core:core:1.7.0] C:\Users\Start\.gradle\caches\transforms-3\02483169c4c9e0ddffa88758188ac6f1\transformed\core-1.7.0\AndroidManifest.xml:24:18-86
+25        android:debuggable="true"
+26        android:extractNativeLibs="false"
+27        android:icon="@drawable/icon"
+27-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:12:9-38
+28        android:label="CliMate"
+28-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:13:9-32
+29        android:roundIcon="@drawable/icon"
+29-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:14:9-43
+30        android:supportsRtl="true"
+30-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:15:9-35
+31        android:testOnly="true"
+32        android:theme="@style/Theme.ClimaCool" >
+32-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:16:9-47
+33        <activity
+33-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:17:9-19:40
+34            android:name="com.example.climacool.airpurifier"
+34-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:18:13-40
+35            android:exported="false" />
+35-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:19:13-37
+36
+37        <service android:name="org.eclipse.paho.android.service.MqttService" />
+37-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:21:9-88
+37-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:21:18-77
+38
+39        <activity
+39-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:23:9-25:40
+40            android:name="com.example.climacool.lights"
+40-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:24:13-35
+41            android:exported="false" />
+41-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:25:13-37
+42        <activity
+42-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:26:9-28:40
+43            android:name="com.example.climacool.Ventilation"
+43-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:27:13-40
+44            android:exported="false" />
+44-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:28:13-37
+45        <activity
+45-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:29:9-31:40
+46            android:name="com.example.climacool.Monitoring"
+46-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:30:13-39
+47            android:exported="false" />
+47-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:31:13-37
+48        <activity
+48-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:32:9-34:40
+49            android:name="com.example.climacool.airconditioner"
+49-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:33:13-43
+50            android:exported="false" />
+50-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:34:13-37
+51        <activity
+51-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:35:9-37:40
+52            android:name="com.example.climacool.Heater"
+52-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:36:13-35
+53            android:exported="false" />
+53-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:37:13-37
+54
+55        <service android:name="org.eclipse.paho.android.service.MqttService" />
+55-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:21:9-88
+55-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:21:18-77
+56
+57        <activity
+57-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:41:9-44:58
+58            android:name="com.example.climacool.Kitchen"
+58-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:42:13-36
+59            android:exported="false"
+59-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:43:13-37
+60            android:parentActivityName="com.example.climacool.MainActivity" />
+60-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:44:13-55
+61        <activity
+61-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:45:9-48:58
+62            android:name="com.example.climacool.Office"
+62-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:46:13-35
+63            android:exported="false"
+63-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:47:13-37
+64            android:parentActivityName="com.example.climacool.MainActivity" />
+64-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:48:13-55
+65        <activity
+65-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:49:9-52:58
+66            android:name="com.example.climacool.Livingroom"
+66-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:50:13-39
+67            android:exported="false"
+67-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:51:13-37
+68            android:parentActivityName="com.example.climacool.MainActivity" />
+68-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:52:13-55
+69        <activity
+69-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:53:9-56:58
+70            android:name="com.example.climacool.Bathroom"
+70-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:54:13-37
+71            android:exported="false"
+71-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:55:13-37
+72            android:parentActivityName="com.example.climacool.MainActivity" />
+72-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:56:13-55
+73        <activity
+73-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:57:9-64:20
+74            android:name="com.example.climacool.BedroomActivity"
+74-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:58:13-44
+75            android:exported="false"
+75-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:59:13-37
+76            android:parentActivityName="com.example.climacool.MainActivity" >
+76-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:60:13-55
+77            <meta-data
+77-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:61:13-63:49
+78                android:name="android.support.PARENT_ACTIVITY"
+78-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:62:17-63
+79                android:value=".MainActivity" />
+79-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:63:17-46
+80        </activity>
+81        <activity
+81-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:65:9-73:20
+82            android:name="com.example.climacool.MainActivity"
+82-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:66:13-41
+83            android:exported="true" >
+83-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:67:13-36
+84            <intent-filter>
+84-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:68:13-72:29
+85                <action android:name="android.intent.action.MAIN" />
+85-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:69:17-69
+85-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:69:25-66
+86
+87                <category android:name="android.intent.category.LAUNCHER" />
+87-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:71:17-77
+87-->C:\Users\Start\AndroidStudioProjects\ClimaCool\app\src\main\AndroidManifest.xml:71:27-74
+88            </intent-filter>
+89        </activity>
+90
+91        <provider
+91-->[com.android.car.ui:car-ui-lib:2.1.0] C:\Users\Start\.gradle\caches\transforms-3\1b0225bdcc223d41945945df16d5514c\transformed\jetified-car-ui-lib-2.1.0\AndroidManifest.xml:34:9-39:71
+92            android:name="com.android.car.ui.core.CarUiInstaller"
+92-->[com.android.car.ui:car-ui-lib:2.1.0] C:\Users\Start\.gradle\caches\transforms-3\1b0225bdcc223d41945945df16d5514c\transformed\jetified-car-ui-lib-2.1.0\AndroidManifest.xml:35:13-66
+93            android:authorities="com.example.climacool.CarUiInstaller"
+93-->[com.android.car.ui:car-ui-lib:2.1.0] C:\Users\Start\.gradle\caches\transforms-3\1b0225bdcc223d41945945df16d5514c\transformed\jetified-car-ui-lib-2.1.0\AndroidManifest.xml:36:13-66
+94            android:directBootAware="true"
+94-->[com.android.car.ui:car-ui-lib:2.1.0] C:\Users\Start\.gradle\caches\transforms-3\1b0225bdcc223d41945945df16d5514c\transformed\jetified-car-ui-lib-2.1.0\AndroidManifest.xml:37:13-43
+95            android:exported="false"
+95-->[com.android.car.ui:car-ui-lib:2.1.0] C:\Users\Start\.gradle\caches\transforms-3\1b0225bdcc223d41945945df16d5514c\transformed\jetified-car-ui-lib-2.1.0\AndroidManifest.xml:38:13-37
+96            android:process="@string/car_ui_installer_process_name" />
+96-->[com.android.car.ui:car-ui-lib:2.1.0] C:\Users\Start\.gradle\caches\transforms-3\1b0225bdcc223d41945945df16d5514c\transformed\jetified-car-ui-lib-2.1.0\AndroidManifest.xml:39:13-68
+97        <provider
+97-->[com.android.car.ui:car-ui-lib:2.1.0] C:\Users\Start\.gradle\caches\transforms-3\1b0225bdcc223d41945945df16d5514c\transformed\jetified-car-ui-lib-2.1.0\AndroidManifest.xml:40:9-45:79
+98            android:name="com.android.car.ui.core.SearchResultsProvider"
+98-->[com.android.car.ui:car-ui-lib:2.1.0] C:\Users\Start\.gradle\caches\transforms-3\1b0225bdcc223d41945945df16d5514c\transformed\jetified-car-ui-lib-2.1.0\AndroidManifest.xml:41:13-73
+99            android:authorities="com.example.climacool.SearchResultsProvider"
+99-->[com.android.car.ui:car-ui-lib:2.1.0] C:\Users\Start\.gradle\caches\transforms-3\1b0225bdcc223d41945945df16d5514c\transformed\jetified-car-ui-lib-2.1.0\AndroidManifest.xml:42:13-73
+100            android:exported="true"
+100-->[com.android.car.ui:car-ui-lib:2.1.0] C:\Users\Start\.gradle\caches\transforms-3\1b0225bdcc223d41945945df16d5514c\transformed\jetified-car-ui-lib-2.1.0\AndroidManifest.xml:43:13-36
+101            android:process="@string/car_ui_installer_process_name"
+101-->[com.android.car.ui:car-ui-lib:2.1.0] C:\Users\Start\.gradle\caches\transforms-3\1b0225bdcc223d41945945df16d5514c\transformed\jetified-car-ui-lib-2.1.0\AndroidManifest.xml:44:13-68
+102            android:readPermission="com.android.car.ui.READ_SEARCH_RESULTS" />
+102-->[com.android.car.ui:car-ui-lib:2.1.0] C:\Users\Start\.gradle\caches\transforms-3\1b0225bdcc223d41945945df16d5514c\transformed\jetified-car-ui-lib-2.1.0\AndroidManifest.xml:45:13-76
+103        <provider
+103-->[androidx.emoji2:emoji2:1.0.0] C:\Users\Start\.gradle\caches\transforms-3\f1920f1d9631b904725b19a966861cf8\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:26:9-34:20
+104            android:name="androidx.startup.InitializationProvider"
+104-->[androidx.emoji2:emoji2:1.0.0] C:\Users\Start\.gradle\caches\transforms-3\f1920f1d9631b904725b19a966861cf8\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:27:13-67
+105            android:authorities="com.example.climacool.androidx-startup"
+105-->[androidx.emoji2:emoji2:1.0.0] C:\Users\Start\.gradle\caches\transforms-3\f1920f1d9631b904725b19a966861cf8\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:28:13-68
+106            android:exported="false" >
+106-->[androidx.emoji2:emoji2:1.0.0] C:\Users\Start\.gradle\caches\transforms-3\f1920f1d9631b904725b19a966861cf8\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:29:13-37
+107            <meta-data
+107-->[androidx.emoji2:emoji2:1.0.0] C:\Users\Start\.gradle\caches\transforms-3\f1920f1d9631b904725b19a966861cf8\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:31:13-33:52
+108                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+108-->[androidx.emoji2:emoji2:1.0.0] C:\Users\Start\.gradle\caches\transforms-3\f1920f1d9631b904725b19a966861cf8\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:32:17-75
+109                android:value="androidx.startup" />
+109-->[androidx.emoji2:emoji2:1.0.0] C:\Users\Start\.gradle\caches\transforms-3\f1920f1d9631b904725b19a966861cf8\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:33:17-49
+110            <meta-data
+110-->[androidx.lifecycle:lifecycle-process:2.4.0] C:\Users\Start\.gradle\caches\transforms-3\e2a4092d19f5ec1c3a53b27f970ef211\transformed\jetified-lifecycle-process-2.4.0\AndroidManifest.xml:31:13-33:52
+111                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+111-->[androidx.lifecycle:lifecycle-process:2.4.0] C:\Users\Start\.gradle\caches\transforms-3\e2a4092d19f5ec1c3a53b27f970ef211\transformed\jetified-lifecycle-process-2.4.0\AndroidManifest.xml:32:17-78
+112                android:value="androidx.startup" />
+112-->[androidx.lifecycle:lifecycle-process:2.4.0] C:\Users\Start\.gradle\caches\transforms-3\e2a4092d19f5ec1c3a53b27f970ef211\transformed\jetified-lifecycle-process-2.4.0\AndroidManifest.xml:33:17-49
+113        </provider>
+114    </application>
+115
+116</manifest>
