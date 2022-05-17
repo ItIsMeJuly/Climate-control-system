@@ -36,7 +36,7 @@ public class Livingroom extends AppCompatActivity {
                     @Override public void onItemClick(View view, int position) {
                         switch (position){
                             case 0:
-                                lights.putExtra("topic",firstPart + "lights");
+                                lights.putExtra("topic",firstPart + "light");
                                 Livingroom.this.startActivity(lights);
                                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                                 break;

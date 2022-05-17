@@ -15,6 +15,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ClimaCool">
         <activity
+            android:name=".airpurifier"
+            android:exported="false" />
+
+        <service android:name="org.eclipse.paho.android.service.MqttService"></service>
+
+        <activity
             android:name=".lights"
             android:exported="false" />
         <activity

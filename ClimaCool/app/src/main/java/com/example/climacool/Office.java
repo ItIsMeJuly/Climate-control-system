@@ -24,6 +24,7 @@ public class Office extends AppCompatActivity {
 
         rv = findViewById(R.id.idOfficeRV);
 
+        //catch topic
         Intent received = getIntent();
         String firstPart = received.getStringExtra("topic");
 
@@ -42,7 +43,7 @@ public class Office extends AppCompatActivity {
                                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                                 break;
                             case 1:
-                                lights.putExtra("topic", firstPart + "lights");
+                                lights.putExtra("topic", firstPart + "light");
                                 Office.this.startActivity(lights);
                                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                                 break;

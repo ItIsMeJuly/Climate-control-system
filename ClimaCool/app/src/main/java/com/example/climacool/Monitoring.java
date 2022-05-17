@@ -1,31 +1,33 @@
 package com.example.climacool;
 
-import static java.lang.Thread.sleep;
-import static java.nio.charset.StandardCharsets.UTF_8;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
-import android.content.Intent;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.widget.EditText;
-import android.widget.Toast;
+import org.eclipse.paho.android.service.MqttAndroidClient;
+import org.eclipse.paho.client.mqttv3.IMqttActionListener;
+import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
+import org.eclipse.paho.client.mqttv3.IMqttToken;
+import org.eclipse.paho.client.mqttv3.MqttCallback;
+import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
+import org.eclipse.paho.client.mqttv3.MqttException;
+import org.eclipse.paho.client.mqttv3.MqttMessage;
 
-import com.hivemq.client.mqtt.MqttGlobalPublishFilter;
-
-import java.nio.CharBuffer;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.Arrays;
 
 public class Monitoring extends AppCompatActivity {
 
-    MqttConnectionHandler handler = new MqttConnectionHandler(
-            "087086635ca64d93b3c6d5b0207bc124.s2.eu.hivemq.cloud",
-            "user2",
-            "user2Pass"
-    );
+    String broker = "tcp://h9111c9f.eu-central-1.emqx.cloud:15219";
+    String clientId = "emqx_test";
+
+    //initialize a handler with the MQTT broker
+    MqttAndroidClient handler;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,12 +35,9 @@ public class Monitoring extends AppCompatActivity {
         setContentView(R.layout.activity_monitoring);
 
         Intent received = getIntent();
-        String topic = received.getStringExtra("topic");
+        String mainTopic = received.getStringExtra("topic");
 
-        placeTitle(topic);
-
-        handler.setTopic(topic + "/+");
-        handler.subscribe();
+        placeTitle(mainTopic);
 
         EditText temp = findViewById(R.id.editTextNumber2);
         EditText humid = findViewById(R.id.editTextNumber);
@@ -46,53 +45,95 @@ public class Monitoring extends AppCompatActivity {
         EditText meth = findViewById(R.id.editTextNumber4);
 
 
-        handler.getClient().toAsync().publishes(MqttGlobalPublishFilter.ALL, publish -> {
-            if(publish.getPayload().isPresent()) {
-                CharBuffer result = UTF_8.decode(publish.getPayload().get());
-                if (Character.isDigit(result.charAt(0))) {
-                    if(String.valueOf(publish.getTopic()).equals(topic + "/temp")) {
+        //new MQTT connection
+        MqttConnectOptions opts = new MqttConnectOptions();
+        opts.setUserName("user1");
+        opts.setPassword("user1Pass".toCharArray());
+
+        handler = new MqttAndroidClient(getApplicationContext(), broker, "MobileApp");
+        handler.setCallback(new MqttCallback() {
+            @Override
+            public void connectionLost(Throwable cause) {
+
+            }
+
+            @Override
+            public void messageArrived(String topic, MqttMessage message) throws Exception {
+                String msg = new String(message.getPayload());
+                Log.d("msg", msg);
+                if (Character.isDigit(msg.charAt(0))) {
+                    if(topic.equals(mainTopic + "/temperature")) {
                         temp.post(new Runnable() {
                             @Override
                             public void run() {
-                                temp.setText(result.toString());
+                                temp.setText(msg);
                             }
                         });
                     }
-                    else if(String.valueOf(publish.getTopic()).equals(topic + "/humid")){
+                    else if(topic.equals(mainTopic + "/humidity")){
                         humid.post(new Runnable() {
                             @Override
                             public void run() {
-                                humid.setText(result.toString());
+                                humid.setText(msg);
                             }
                         });
                     }
-                    else if(String.valueOf(publish.getTopic()).equals(topic + "/CO2")){
+                    else if(topic.equals(mainTopic + "/CO2")){
                         co2.post(new Runnable() {
                             @Override
                             public void run() {
-                                co2.setText(result.toString());
+                                co2.setText(msg);
                             }
                         });
                     }
-                    else if(String.valueOf(publish.getTopic()).equals(topic + "/meth")){
+                    else if(topic.equals(mainTopic + "/methane")){
                         meth.post(new Runnable() {
                             @Override
                             public void run() {
-                                meth.setText(result.toString());
+                                meth.setText(msg);
                             }
                         });
                     }
                 }
             }
+
+            @Override
+            public void deliveryComplete(IMqttDeliveryToken token) {
+
+            }
         });
 
+        try {
+            handler.connect(opts, null, new IMqttActionListener() {
+                @Override
+                public void onSuccess(IMqttToken asyncActionToken) {
+                    try {
+                        handler.subscribe(mainTopic + "/+", 0);
+                    } catch (MqttException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+
+                }
+            });
+        } catch (MqttException e) {
+            e.printStackTrace();
+        }
     }
 
     OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
         @Override
         public void handleOnBackPressed() {
             finish();
-            handler.disconnect();
+            try {
+                handler.disconnect();
+            } catch (MqttException e) {
+                Toast.makeText(getApplicationContext(), "failed to disconnect", Toast.LENGTH_LONG).show();
+                e.printStackTrace();
+            }
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         }
     };
@@ -100,7 +141,12 @@ public class Monitoring extends AppCompatActivity {
     @Override
     public void finish(){
         super.finish();
-        handler.disconnect();
+        try {
+            handler.disconnect();
+        } catch (MqttException e) {
+            Toast.makeText(getApplicationContext(), "failed to disconnect", Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 

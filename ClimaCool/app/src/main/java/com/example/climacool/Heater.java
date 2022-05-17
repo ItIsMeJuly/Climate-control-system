@@ -1,113 +1,175 @@
 package com.example.climacool;
 
-import static com.hivemq.client.mqtt.MqttGlobalPublishFilter.ALL;
-
-import static java.nio.charset.StandardCharsets.UTF_8;
-
-import androidx.activity.OnBackPressedCallback;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.hivemq.client.mqtt.MqttGlobalPublishFilter;
-import java.lang.Character;
-import java.nio.CharBuffer;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
+import androidx.activity.OnBackPressedCallback;
+import androidx.appcompat.app.AppCompatActivity;
 
-import io.reactivex.plugins.RxJavaPlugins;
+import org.eclipse.paho.android.service.MqttAndroidClient;
+import org.eclipse.paho.client.mqttv3.IMqttActionListener;
+import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
+import org.eclipse.paho.client.mqttv3.IMqttToken;
+import org.eclipse.paho.client.mqttv3.MqttCallback;
+import org.eclipse.paho.client.mqttv3.MqttClient;
+import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
+import org.eclipse.paho.client.mqttv3.MqttException;
+import org.eclipse.paho.client.mqttv3.MqttMessage;
+import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
+
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 
 public class Heater extends AppCompatActivity {
 
     int temperature = 0;
 
-    MqttConnectionHandler handler = new MqttConnectionHandler(
-            "087086635ca64d93b3c6d5b0207bc124.s2.eu.hivemq.cloud",
-            "user2",
-            "user2Pass"
-    );
+    String broker = "tcp://h9111c9f.eu-central-1.emqx.cloud:15219";
+    String clientId = "emqx_test";
 
+    //Define a handler with the MQTT broker
+    MqttAndroidClient handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_heater);
 
+        //catch topic
         Intent received = getIntent();
         String topic = received.getStringExtra("topic");
+        String stateTopic = topic + "/state";
 
         placeTitle(topic);
 
-        handler.setTopic(topic);
-        handler.subscribe();
+        Button btnOn = findViewById(R.id.button);
+        Button btnOff = findViewById(R.id.button2);
+        EditText etTemperature = findViewById(R.id.editTextNumberDecimal);
 
-        Button on = findViewById(R.id.button);
-        Button off = findViewById(R.id.button2);
-        EditText editText = findViewById(R.id.editTextNumberDecimal);
+        //new MQTT connection
+        MqttConnectOptions opts = new MqttConnectOptions();
+        opts.setUserName("user1");
+        opts.setPassword("user1Pass".toCharArray());
 
-        editText.setEnabled(false);
-        off.setEnabled(false);
+        handler = new MqttAndroidClient(getApplicationContext(), broker, clientId);
 
-        RxJavaPlugins.setErrorHandler (e -> { });
+        //set callback for Messages
+        handler.setCallback(new MqttCallback() {
+            @Override
+            public void connectionLost(Throwable cause) {
 
-        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            }
+
+            @Override
+            public void messageArrived(String topic, MqttMessage message) throws Exception {
+                String msg = new String(message.getPayload());
+                if(msg.equals("off")){
+                    etTemperature.setEnabled(false);
+                    btnOn.setEnabled(true);
+                    btnOff.setEnabled(false);
+                }
+                else if(msg.equals("on")){
+                    btnOn.setEnabled(false);
+                }
+                else if (Character.isDigit(msg.charAt(0))) {
+                    temperature = Integer.parseInt(msg);
+                    etTemperature.setText(msg);
+                }
+            }
+
+            @Override
+            public void deliveryComplete(IMqttDeliveryToken token) {
+
+            }
+        });
+
+        try {
+            handler.connect(opts, null, new IMqttActionListener() {
+                @Override
+                public void onSuccess(IMqttToken asyncActionToken) {
+                    try {
+                        handler.subscribe(topic + "/+", 0);
+                    } catch (MqttException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+
+                }
+            });
+        } catch (MqttException e) {
+            e.printStackTrace();
+        }
+
+
+        etTemperature.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 boolean handled = false;
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    temperature = Integer.parseInt(String.valueOf(editText.getText()));
-                    handler.publish(Integer.toString(temperature));
-                    handled = true;
+                    temperature = Integer.parseInt(String.valueOf(etTemperature.getText()));
+                    try {
+                        handler.publish(topic + "/temperature", Integer.toString(temperature).getBytes(), 1, true);
+                    } catch (MqttException e) {
+                        Toast.makeText(getApplicationContext(), "failed to send info", Toast.LENGTH_LONG).show();
+                        e.printStackTrace();
+                    }
+                    //handled = true;
                 }
                 return handled;
             }
         });
 
-        on.setOnClickListener(new View.OnClickListener() {
+        btnOn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                editText.setEnabled(true);
-                on.setEnabled(false);
-                off.setEnabled(true);
-                handler.publish("on");
-                handler.publish(Integer.toString(temperature));
-            }
-        });
-
-        off.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                editText.setEnabled(false);
-                off.setEnabled(false);
-                on.setEnabled(true);
-                handler.publish("off");
-            }
-        });
-
-
-
-        handler.getClient().toAsync().publishes(MqttGlobalPublishFilter.SUBSCRIBED, publish -> {
-            if(publish.getPayload().isPresent()) {
-                CharBuffer result = UTF_8.decode(publish.getPayload().get());
-                if (Character.isDigit(result.charAt(0))) {
-                    editText.setText(result);
+                etTemperature.setEnabled(true);
+                btnOn.setEnabled(false);
+                btnOff.setEnabled(true);
+                try {
+                    handler.publish(stateTopic, "on".getBytes(), 1, true);
+                } catch (MqttException e) {
+                    Toast.makeText(getApplicationContext(), "failed to send info", Toast.LENGTH_LONG).show();
+                    e.printStackTrace();
                 }
             }
         });
 
+        btnOff.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                etTemperature.setEnabled(false);
+                btnOff.setEnabled(false);
+                btnOn.setEnabled(true);
+                try {
+                    handler.publish(stateTopic, "off".getBytes(), 1, true);
+                } catch (MqttException e) {
+                    Toast.makeText(getApplicationContext(), "failed to send info", Toast.LENGTH_LONG).show();
+                    e.printStackTrace();
+                }
+            }
+        });
+
+
         OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
             @Override
             public void handleOnBackPressed() {
-                handler.disconnect();
+                try {
+                    handler.disconnect();
+                } catch (MqttException e) {
+                    Toast.makeText(getApplicationContext(), "failed to disconnect", Toast.LENGTH_LONG).show();
+                    e.printStackTrace();
+                }
                 finish();
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
@@ -118,7 +180,22 @@ public class Heater extends AppCompatActivity {
     @Override
     public void finish(){
         super.finish();
-        handler.disconnect();
+        try {
+            handler.disconnect(getApplicationContext(), new IMqttActionListener() {
+                @Override
+                public void onSuccess(IMqttToken asyncActionToken) {
+                    Toast.makeText(getApplicationContext(), "disconnected", Toast.LENGTH_LONG).show();
+                }
+
+                @Override
+                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                    Toast.makeText(getApplicationContext(), "failed to disconnect", Toast.LENGTH_LONG).show();
+                }
+            });
+        } catch (MqttException e) {
+            Toast.makeText(getApplicationContext(), "failed to disconnect", Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 

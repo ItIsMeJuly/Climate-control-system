@@ -1,6 +1,6 @@
 package com.example.climacool;
 
-import static com.hivemq.client.mqtt.MqttGlobalPublishFilter.ALL;
+
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 import android.content.Intent;
@@ -16,10 +16,6 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.hivemq.client.mqtt.MqttClient;
-import com.hivemq.client.mqtt.datatypes.MqttQos;
-import com.hivemq.client.mqtt.mqtt5.Mqtt5BlockingClient;
 
 import java.util.ArrayList;
 
@@ -102,44 +98,3 @@ public class BedroomActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 }
-    /*
-         static void sendBtnPress(String topic){
-            final String host = "e91319399f09434ebbe85cb453c78b53.s2.eu.hivemq.cloud";
-            final String username = "user2";
-            final String password = "user2Pass";
-
-            final Mqtt5BlockingClient client = MqttClient.builder()
-                    .useMqttVersion5()
-                    .serverHost(host)
-                    .serverPort(8884)
-                    .sslWithDefaultConfig()
-                    .webSocketConfig()
-                    .serverPath("mqtt")
-                    .applyWebSocketConfig()
-                    .buildBlocking();
-
-            client.connectWith()
-                    .simpleAuth()
-                    .username(username)
-                    .password(UTF_8.encode(password))
-                    .applySimpleAuth()
-                    .send();
-            Log.d("", "connected");
-
-            client.subscribeWith()
-                    .topicFilter("my/test/topic3")
-                    .qos(MqttQos.EXACTLY_ONCE)
-                    .send();
-            Log.d("", "subscribed");
-
-            client.toAsync().publishes(ALL, publish -> {
-                Log.d("", "Received message: " + publish.getTopic() + " -> " + UTF_8.decode(publish.getPayload().get()));
-
-                client.disconnect();
-            });
-
-        /*client.publishWith()
-                .topic("my/test/topic")
-                .payload(UTF_8.encode("Hello"))
-                .qos(MqttQos.EXACTLY_ONCE)
-                .send();*/

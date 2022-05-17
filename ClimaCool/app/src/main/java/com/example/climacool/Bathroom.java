@@ -23,12 +23,13 @@ public class Bathroom extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bathroom);
 
+        //catch topic
         Intent received = getIntent();
         String firstPart = received.getStringExtra("topic");
 
         rv = findViewById(R.id.idBarhroomRV);
 
-        Intent fan = new Intent(this, Ventilation.class);
+        Intent airpurifier = new Intent(this, airpurifier.class);
         Intent monitoring = new Intent(this, Monitoring.class);
 
         rv.addOnItemTouchListener(
@@ -36,8 +37,8 @@ public class Bathroom extends AppCompatActivity {
                     @Override public void onItemClick(View view, int position) {
                         switch (position){
                             case 0:
-                                fan.putExtra("topic",firstPart + "fan");
-                                Bathroom.this.startActivity(fan);
+                                airpurifier.putExtra("topic",firstPart + "air_purifier");
+                                Bathroom.this.startActivity(airpurifier);
                                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                                 break;
                             case 1:
