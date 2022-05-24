@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: com.android.car.ui:car-ui-lib:2.1.0@aar">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/1b0225bdcc223d41945945df16d5514c/transformed/jetified-car-ui-lib-2.1.0/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/1b0225bdcc223d41945945df16d5514c/transformed/jetified-car-ui-lib-2.1.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/1b0225bdcc223d41945945df16d5514c/transformed/jetified-car-ui-lib-2.1.0/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.car.ui/car-ui-lib/2.1.0/6f106ca9b1105c53c81cbf044f518c8e7edf2cb4/car-ui-lib-2.1.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES />
+  </library>
+</component>

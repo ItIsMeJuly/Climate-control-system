@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.QuadFlask:colorpicker:0.0.15@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/567f656a26ef503c16560e5f90e079fd/transformed/jetified-colorpicker-0.0.15/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/567f656a26ef503c16560e5f90e079fd/transformed/jetified-colorpicker-0.0.15/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/567f656a26ef503c16560e5f90e079fd/transformed/jetified-colorpicker-0.0.15/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.QuadFlask/colorpicker/0.0.15/7c63757738659987bb3bcaebb5f7626d286b64d7/colorpicker-0.0.15-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
