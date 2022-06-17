@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/Start/AndroidStudioProjects/ClimaCool/app/src/main/res/drawable/ic_launcher_background.xml" value="0.112" />
+        <entry key="..\:/Users/Start/AndroidStudioProjects/ClimaCool/app/src/main/res/drawable/shape.xml" value="0.2" />
+        <entry key="..\:/Users/Start/AndroidStudioProjects/ClimaCool/app/src/main/res/font/sfpro.xml" value="0.2334330910645575" />
+        <entry key="..\:/Users/Start/AndroidStudioProjects/ClimaCool/app/src/main/res/layout/activity_airconditioner.xml" value="0.176" />
+        <entry key="..\:/Users/Start/AndroidStudioProjects/ClimaCool/app/src/main/res/layout/activity_airpurifier.xml" value="0.20863616930312098" />
+        <entry key="..\:/Users/Start/AndroidStudioProjects/ClimaCool/app/src/main/res/layout/activity_bathroom.xml" value="0.264" />
+        <entry key="..\:/Users/Start/AndroidStudioProjects/ClimaCool/app/src/main/res/layout/activity_bedroom.xml" value="0.2" />
+        <entry key="..\:/Users/Start/AndroidStudioProjects/ClimaCool/app/src/main/res/layout/activity_display_message.xml" value="0.264" />
+        <entry key="..\:/Users/Start/AndroidStudioProjects/ClimaCool/app/src/main/res/layout/activity_heater.xml" value="0.2" />
+        <entry key="..\:/Users/Start/AndroidStudioProjects/ClimaCool/app/src/main/res/layout/activity_kitchen.xml" value="0.264" />
+        <entry key="..\:/Users/Start/AndroidStudioProjects/ClimaCool/app/src/main/res/layout/activity_lights.xml" value="0.2" />
+        <entry key="..\:/Users/Start/AndroidStudioProjects/ClimaCool/app/src/main/res/layout/activity_livingroom.xml" value="0.264" />
+        <entry key="..\:/Users/Start/AndroidStudioProjects/ClimaCool/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/Users/Start/AndroidStudioProjects/ClimaCool/app/src/main/res/layout/activity_monitoring.xml" value="0.2" />
+        <entry key="..\:/Users/Start/AndroidStudioProjects/ClimaCool/app/src/main/res/layout/activity_office.xml" value="0.264" />
+        <entry key="..\:/Users/Start/AndroidStudioProjects/ClimaCool/app/src/main/res/layout/activity_ventilation.xml" value="0.20863616930312098" />
+        <entry key="..\:/Users/Start/AndroidStudioProjects/ClimaCool/app/src/main/res/layout/border.xml" value="0.1" />
+        <entry key="..\:/Users/Start/AndroidStudioProjects/ClimaCool/app/src/main/res/layout/card_layout.xml" value="0.264" />
+        <entry key="..\:/Users/Start/AndroidStudioProjects/ClimaCool/app/src/main/res/layout/card_systems.xml" value="0.264" />
+        <entry key="..\:/Users/Start/AndroidStudioProjects/ClimaCool/app/src/main/res/layout/connection_set.xml" value="0.2" />
+        <entry key="..\:/Users/Start/AndroidStudioProjects/ClimaCool/app/src/main/res/layout/fade_in.xml" value="0.19709277469003847" />
+        <entry key="..\:/Users/Start/AndroidStudioProjects/ClimaCool/app/src/main/res/layout/shapes.xml" value="0.19709277469003847" />
+        <entry key="..\:/Users/Start/AndroidStudioProjects/ClimaCool/app/src/main/res/layout/use_switch.xml" value="0.2" />
+        <entry key="..\:/Users/Start/AndroidStudioProjects/ClimaCool/app/src/main/res/menu/settings_menu.xml" value="0.2" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

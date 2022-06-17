@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">ClimaCool</string>
+    <string name="edit_message">Enter Message</string>
+    <string name="button_send">Send</string>
+    <string name="course_name" />
+    <string name="purify">Purify</string>
+</resources>
