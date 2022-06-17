@@ -20,4 +20,4 @@ A Climate control system which uses arduinos with sensors and actuators to monit
   </ul>
 </ol>
 
-# This is a group project where my job was to establish the connection to the broker for all boards, Desktop App and Phone App. I was in charge of building the Android Application as well and fix/debug the solutions of my fellow teammates.
+This is a group project where my job was to establish the connection to the broker for all boards, Desktop App and Phone App. I was in charge of building the Android Application and the Lights system as well and fix/debug the solutions of my fellow teammates.
