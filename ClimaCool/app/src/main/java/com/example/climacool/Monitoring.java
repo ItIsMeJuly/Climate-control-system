@@ -25,7 +25,7 @@ public class Monitoring extends AppCompatActivity {
     private String broker = "tcp://h9111c9f.eu-central-1.emqx.cloud:15219";
 
     //initialize a handler with the MQTT broker
-    private MqttAndroidClient handler;
+    MqttAndroidClient handler;
 
 
     @Override
@@ -37,7 +37,7 @@ public class Monitoring extends AppCompatActivity {
         String []data = received.getStringArrayExtra("topic");
 
         if(data[1].equals("no"))
-            broker = "tcp://192.168.43.136:1883";
+            broker = "tcp://192.168.137.1:1883";
 
         placeTitle(data[0]);
 
@@ -62,7 +62,6 @@ public class Monitoring extends AppCompatActivity {
             @Override
             public void messageArrived(String topic, MqttMessage message) throws Exception {
                 String msg = new String(message.getPayload());
-                Log.d("msg", msg);
                 if (Character.isDigit(msg.charAt(0))) {
                     if(topic.equals(data[0] + "/temperature")) {
                         temp.post(new Runnable() {

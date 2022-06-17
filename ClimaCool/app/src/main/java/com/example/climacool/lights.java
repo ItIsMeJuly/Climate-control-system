@@ -69,7 +69,7 @@ public class lights extends AppCompatActivity {
         placeTitle(data[0]);
 
         if(data[1].equals("no"))
-            broker = "tcp://192.168.43.136:1883";
+            broker = "tcp://192.168.137.1:1883";
 
         //RxJavaPlugins.setErrorHandler (e -> { });
 

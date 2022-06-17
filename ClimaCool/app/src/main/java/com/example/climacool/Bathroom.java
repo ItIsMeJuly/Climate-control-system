@@ -37,7 +37,7 @@ public class Bathroom extends AppCompatActivity {
                     @Override public void onItemClick(View view, int position) {
                         switch (position){
                             case 0:
-                                airpurifier.putExtra("topic",new String[]{data[0] + "air_purifier", data[1]});
+                                airpurifier.putExtra("topic",new String[]{data[0] + "airpurifier", data[1]});
                                 Bathroom.this.startActivity(airpurifier);
                                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                                 break;

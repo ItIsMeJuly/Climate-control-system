@@ -8,16 +8,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.eclipse.paho.android.service.MqttAndroidClient;
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
@@ -41,11 +45,13 @@ public class Ventilation extends AppCompatActivity {
     RadioButton first;
     RadioButton second;
     RadioButton third;
+    EditText etHumidity;
 
     Button btnOff;
     Button btnOn;
 
     String throtTopic;
+    String humidTopic;
 
     String broker = "tcp://h9111c9f.eu-central-1.emqx.cloud:15219";
 
@@ -55,6 +61,8 @@ public class Ventilation extends AppCompatActivity {
 
     //initialize a handler with the MQTT broker
     MqttAndroidClient handler;
+
+    double humidity;
 
     public Ventilation() throws MqttException {
     }
@@ -75,6 +83,7 @@ public class Ventilation extends AppCompatActivity {
                     auto.setVisibility(View.VISIBLE);
                     btnOn.setVisibility(View.INVISIBLE);
                     btnOff.setVisibility(View.INVISIBLE);
+                    etHumidity.setEnabled(true);
                     for (int i = 0; i < radioGroup.getChildCount(); i++) {
                         radioGroup.getChildAt(i).setEnabled(false);
                     }
@@ -89,6 +98,7 @@ public class Ventilation extends AppCompatActivity {
                     auto.setVisibility(View.INVISIBLE);
                     btnOn.setVisibility(View.VISIBLE);
                     btnOff.setVisibility(View.VISIBLE);
+                    etHumidity.setEnabled(false);
                     for (int i = 0; i < radioGroup.getChildCount(); i++) {
                         radioGroup.getChildAt(i).setEnabled(true);
                     }
@@ -118,12 +128,13 @@ public class Ventilation extends AppCompatActivity {
         modeTopic = data[0] + "/mode";
         String stateTopic = data[0] + "/state";
         throtTopic = data[0] + "/throttle";
+        humidTopic = data[0] + "/humidity";
         data[0] += "/#";
 
         //RxJavaPlugins.setErrorHandler (e -> { });
 
         if(data[1].equals("no"))
-            broker = "tcp://192.168.43.136:1883";
+            broker = "tcp://192.168.137.1:1883";
 
         //place the title of the activity window
         placeTitle(data[0]);
@@ -136,6 +147,8 @@ public class Ventilation extends AppCompatActivity {
         first = findViewById(R.id.radioButton4);
         second = findViewById(R.id.radioButton6);
         third = findViewById(R.id.radioButton5);
+
+        etHumidity = findViewById(R.id.editTextNumber5);
 
 
         //new MQTT connection
@@ -158,7 +171,12 @@ public class Ventilation extends AppCompatActivity {
                     mode = msg;
                     if(msg.equals("auto")){
                         sw.setChecked(true);
+                        etHumidity.setEnabled(true);
                     }
+                }
+                else if(topic.equals(humidTopic)){
+                    humidity = Double.parseDouble(msg);
+                    etHumidity.setText(msg);
                 }
                 switch (msg){
                     case "first":
@@ -176,6 +194,18 @@ public class Ventilation extends AppCompatActivity {
                         }
                         btnOff.setEnabled(true);
                         btnOn.setEnabled(false);
+                        if(!mode.equals("manual")) {
+                            for (int i = 0; i < radioGroup.getChildCount(); i++) {
+                                radioGroup.getChildAt(i).setEnabled(false);
+                            }
+                            etHumidity.setEnabled(true);
+                        }
+                        else {
+                            for (int i = 0; i < radioGroup.getChildCount(); i++) {
+                                radioGroup.getChildAt(i).setEnabled(true);
+                            }
+                            etHumidity.setEnabled(false);
+                        }
                         break;
                     case "off":
                         for (int i = 0; i < radioGroup.getChildCount(); i++) {
@@ -183,6 +213,7 @@ public class Ventilation extends AppCompatActivity {
                         }
                         btnOn.setEnabled(true);
                         btnOff.setEnabled(false);
+                        etHumidity.setEnabled(false);
                         break;
                 }
             }
@@ -259,6 +290,26 @@ public class Ventilation extends AppCompatActivity {
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         };
+
+        etHumidity.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    //get the value from the text box and send it to MQTT broker
+                    humidity = Double.parseDouble(String.valueOf(etHumidity.getText()));
+                    try {
+                        handler.publish(humidTopic, Double.toString(humidity).getBytes(), 1, true);
+                    } catch (MqttException e) {
+                        Toast.makeText(getApplicationContext(), "failed to deliver info", Toast.LENGTH_LONG).show();
+                        e.printStackTrace();
+                    }
+                }
+                v.clearFocus();
+                return handled;
+            }
+        });
+
 
         addListenerOnRadioGroup();
     }

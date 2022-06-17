@@ -47,7 +47,7 @@ public class airconditioner extends AppCompatActivity {
     Button btnOff;
 
     //the temperature to be send to the board
-    float temperature;
+    double temperature;
     String[] data;
     String stateTopic;
     String tempTopic;
@@ -59,6 +59,7 @@ public class airconditioner extends AppCompatActivity {
     String broker = "tcp://h9111c9f.eu-central-1.emqx.cloud:15219";
     String modeTopic;
     String mode = "manual";
+    String []topicMon;
 
     MqttAndroidClient handler;
 
@@ -127,7 +128,7 @@ public class airconditioner extends AppCompatActivity {
 
 
         if(data[1].equals("no"))
-            broker = "tcp://192.168.43.136:1883";
+            broker = "tcp://192.168.137.1:1883";
 
         placeTitle(data[0]);
 
@@ -162,7 +163,7 @@ public class airconditioner extends AppCompatActivity {
                 String msg = new String(message.getPayload());
 
                 if(Character.isDigit(msg.charAt(0))){
-                    temperature = Float.parseFloat(msg);
+                    temperature = Double.parseDouble(msg);
                     etTemperature.setText(msg);
                 }
                 else if(topic.equals(mainTopic + "/mode")){
@@ -170,6 +171,20 @@ public class airconditioner extends AppCompatActivity {
                     if(msg.equals("auto"))
                         sw.setChecked(true);
                 }
+
+                else if(topic.equals(topicMon[0] + "/heater/mode")){
+                    if(msg.equals("auto")){
+                        mode = msg;
+                        sw.setChecked(true);
+                    }
+                }
+
+                else if(topic.equals(topicMon[0] + "/monitoring/temperature")){
+                    if(mode.equals("auto")){
+                        temperature = Double.parseDouble(msg);
+                    }
+                }
+
                 else{
                     switch (msg) {
                         case "first":
@@ -223,6 +238,9 @@ public class airconditioner extends AppCompatActivity {
                 public void onSuccess(IMqttToken asyncActionToken) {
                     try {
                         handler.subscribe(finalTopic, 0);
+                        topicMon = new String[]{Arrays.toString(data[0].split("/"))};
+                        handler.subscribe(topicMon[0] + "/monitoring/temperature", 0);
+                        handler.subscribe(topicMon[0] + "/heater/mode", 0);
                     } catch (MqttException e) {
                         e.printStackTrace();
                     }
@@ -246,7 +264,7 @@ public class airconditioner extends AppCompatActivity {
                     //get the value from the text box and send it to MQTT broker
                     temperature = Integer.parseInt(String.valueOf(etTemperature.getText()));
                     try {
-                        handler.publish(tempTopic, Float.toString(temperature).getBytes(), 1, true);
+                        handler.publish(tempTopic, Double.toString(temperature).getBytes(), 1, true);
                     } catch (MqttException e) {
                         Toast.makeText(getApplicationContext(), "failed to deliver info", Toast.LENGTH_LONG).show();
                         e.printStackTrace();

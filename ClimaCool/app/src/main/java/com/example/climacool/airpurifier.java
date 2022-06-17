@@ -23,10 +23,10 @@ import java.util.TimerTask;
 
 public class airpurifier extends AppCompatActivity {
 
-    private Button spray;
+    Button spray;
 
-    private String broker = "tcp://h9111c9f.eu-central-1.emqx.cloud:15219";
-    private MqttAndroidClient handler;
+    String broker = "tcp://h9111c9f.eu-central-1.emqx.cloud:15219";
+    MqttAndroidClient handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +38,7 @@ public class airpurifier extends AppCompatActivity {
         String []data = received.getStringArrayExtra("topic");
 
         if(data[1].equals("no"))
-            broker = "tcp://192.168.43.136:1883";
+            broker = "tcp://192.168.137.1:1883";
 
         //new MQTT connection
         MqttConnectOptions opts = new MqttConnectOptions();
@@ -68,7 +68,7 @@ public class airpurifier extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 try {
-                    handler.publish(data[0] + "/spray", "press".getBytes(), 1, false);
+                    handler.publish(data[0]+ "/spray", "press".getBytes(), 1, false);
                     Toast.makeText(getApplicationContext(), "wait 3 seconds", Toast.LENGTH_LONG).show();
                 } catch (MqttException e) {
                     e.printStackTrace();

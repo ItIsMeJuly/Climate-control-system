@@ -34,36 +34,42 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 import java.nio.charset.StandardCharsets;
+import java.sql.Array;
 import java.util.Arrays;
 
 public class Heater extends AppCompatActivity {
 
-    private float temperature = 0;
-    private String throtTopic;
-    private String modeTopic;
-    private String stateTopic;
+    double temperature = 0;
+    String throtTopic;
+    String modeTopic;
+    String stateTopic;
 
-    private RadioGroup radioGroup;
-    private RadioButton radioButton;
-    private Button btnOn;
-    private Button btnOff;
+    RadioGroup radioGroup;
+    RadioButton radioButton;
+    Button btnOn;
+    Button btnOff;
 
-    private RadioButton first;
-    private RadioButton second;
-    private RadioButton third;
+    RadioButton first;
+    RadioButton second;
+    RadioButton third;
 
-    private Switch sw;
+    Switch sw;
 
-    private String flag;
-    private MqttConnectOptions opts;
+
+    String flag;
+    MqttConnectOptions opts;
 
     String broker = "tcp://h9111c9f.eu-central-1.emqx.cloud:15219";
     String clientId = "client123134124";
+
+    String []data;
+    EditText etTemperature;
 
     //Define a handler with the MQTT broker
     MqttAndroidClient handler;
 
     String mode = "manual";
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -88,6 +94,7 @@ public class Heater extends AppCompatActivity {
                     }
                     try {
                         handler.publish(modeTopic, "auto".getBytes(StandardCharsets.UTF_8), 1, true);
+                        handler.publish(data[0] + "/temperature", etTemperature.toString().getBytes(StandardCharsets.UTF_8), 1, true);
                     } catch (MqttException e) {
                         e.printStackTrace();
                     }
@@ -121,16 +128,20 @@ public class Heater extends AppCompatActivity {
 
         //catch topic
         Intent received = getIntent();
-        String []data = received.getStringArrayExtra("topic");
+        data = received.getStringArrayExtra("topic");
         flag = data[1];
+
         stateTopic = data[0] + "/state";
         throtTopic = data[0] + "/throttle";
         modeTopic = data[0] + "/mode";
 
         if(data[1].equals("no"))
-            broker = "tcp://192.168.43.136:1883";
+            broker = "tcp://192.168.137.1:1883";
 
-        placeTitle(data[0]);
+        String thisRoom;
+        final String[] otherMode = new String[1];
+
+        thisRoom = placeTitle(data[0]);
 
         radioGroup = findViewById(R.id.RadioGroupHeater);
         first = findViewById(R.id.radioButton10);
@@ -141,7 +152,7 @@ public class Heater extends AppCompatActivity {
         btnOn = findViewById(R.id.button);
         btnOff = findViewById(R.id.button2);
 
-        EditText etTemperature = findViewById(R.id.editTextNumberDecimal);
+        etTemperature = findViewById(R.id.editTextNumberDecimal);
 
         addListenerOnRadioGroup(getApplicationContext());
 
@@ -176,6 +187,19 @@ public class Heater extends AppCompatActivity {
                     }
                 }
 
+                else if(topic.equals(thisRoom + "/airconditioner/mode")){
+                    otherMode[0] = msg;
+                    if(msg.equals("auto")){
+                        sw.setChecked(true);
+                    }
+                }
+
+                else if(topic.equals(thisRoom + "/airconditioner/temperature")){
+                    if(otherMode[0].equals("auto")){
+                        temperature = Float.parseFloat(msg);
+                    }
+                }
+
                 else if(topic.equals(stateTopic)){
                     switch(msg){
                         case "on":
@@ -207,13 +231,14 @@ public class Heater extends AppCompatActivity {
 
                 else if(topic.equals(data[0] + "/mode")){
                     mode = msg;
-                    if(msg.equals("auto")){
+                    if(msg.equals("auto") || otherMode[0].equals("auto")){
+                        mode = "auto";
                         sw.setChecked(true);
                     }
                 }
 
                 else if(topic.equals(data[0] + "/temperature")){
-                    temperature = Float.parseFloat(msg);
+                    temperature = Double.parseDouble(msg);
                     etTemperature.setText(msg);
                 }
             }
@@ -254,9 +279,9 @@ public class Heater extends AppCompatActivity {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 boolean handled = false;
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    temperature = Integer.parseInt(String.valueOf(etTemperature.getText()));
+                    temperature = Double.parseDouble(String.valueOf(etTemperature.getText()));
                     try {
-                        handler.publish(data[0] + "/temperature", Float.toString(temperature).getBytes(), 1, true);
+                        handler.publish(data[0] + "/temperature", Double.toString(temperature).getBytes(), 1, true);
                     } catch (MqttException e) {
                         Toast.makeText(getApplicationContext(), "failed to send info", Toast.LENGTH_LONG).show();
                         e.printStackTrace();
@@ -388,17 +413,22 @@ public class Heater extends AppCompatActivity {
 
 
 
-    void placeTitle(String topic) {
+    String placeTitle(String topic) {
         if (topic.contains("bedroom")) {
             setTitle("Bedroom");
+            return "bedroom";
         } else if (topic.contains("bathroom")) {
             setTitle("Bathroom");
+            return  "bathroom";
         } else if (topic.contains("livingroom")) {
             setTitle("Living room");
+            return  "livingroom";
         } else if (topic.contains("office")) {
             setTitle("Office");
+            return "office";
         } else {
             setTitle("Kitchen");
+            return "kitchen";
         }
     }
 

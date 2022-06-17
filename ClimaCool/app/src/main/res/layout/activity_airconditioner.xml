@@ -26,6 +26,7 @@
         android:layout_marginEnd="56dp"
         android:width="100dp"
         android:ems="10"
+        android:gravity="center_horizontal"
         android:inputType="numberDecimal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
@@ -112,18 +113,19 @@
 
     <TextView
         android:id="@+id/textView26"
-        android:layout_width="300dp"
-        android:layout_height="40dp"
+        android:layout_width="231dp"
+        android:layout_height="43dp"
         android:layout_marginStart="55dp"
+        android:layout_marginTop="76dp"
         android:layout_marginEnd="56dp"
-        android:layout_marginBottom="15dp"
         android:text="Automatic Mode"
         android:textSize="30dp"
         android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/button3"
+
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.507"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

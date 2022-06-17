@@ -27,7 +27,7 @@ public class Livingroom extends AppCompatActivity {
 
         rv = findViewById(R.id.idLivingRoomRV);
 
-        Intent airconditioner = new Intent(this, airconditioner.class);
+        Intent fan = new Intent(this, Ventilation.class);
         Intent monitoring = new Intent(this, Monitoring.class);
         Intent lights = new Intent(this, lights.class);
 
@@ -41,8 +41,8 @@ public class Livingroom extends AppCompatActivity {
                                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                                 break;
                             case 1:
-                                airconditioner.putExtra("topic", new String[]{data[0] + "airconditioner", data[1]});
-                                Livingroom.this.startActivity(airconditioner);
+                                fan.putExtra("topic", new String[]{data[0] + "fan", data[1]});
+                                Livingroom.this.startActivity(fan);
                                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                                 break;
                             case 2:
@@ -56,7 +56,7 @@ public class Livingroom extends AppCompatActivity {
 
         cards = new ArrayList<Model>();
         cards.add(new Model("Light system", R.drawable.lights));
-        cards.add(new Model("Air conditioning", R.drawable.airconditioner));
+        cards.add(new Model("Fans", R.drawable.ventilation));
         cards.add(new Model("Monitoring", R.drawable.monitoring));
 
         AdapterSubmenu adapter = new AdapterSubmenu(this, cards);
